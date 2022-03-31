@@ -9,10 +9,10 @@ class HomePageTest(TestCase):
       found = resolve('/')
       self.assertEqual(found.func, MainPage)
       
-   def test_mainpage_if_responding_view(self):
+   def test_mainpage_responding_view(self):
       request = HttpRequest()
       response = MainPage(request)
       html = response.content.decode('utf8')
-      self.assertTrue(html.startswith('<html>'))
+      self.assertTrue(html.startswith('<!DOCTYPE html>'))
       self.assertIn('<title>National ID System</title>', html)
-      self.assertTrue(html.endswith('</html>'))
+      self.assertTrue(html.endswith(''))
