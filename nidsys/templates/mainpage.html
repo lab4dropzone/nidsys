@@ -12,25 +12,28 @@
 			><input
 				id="surname"
 				type="text"
-				name=""
+				name="surname"
 				placeholder="Enter surname here"
 			/>
 			<label>Firstname: </label
 			><input
 				id="firstname"
 				type="text"
+				name="firstname"
 				placeholder="Enter firstname here"
 			/>
 			<label>Middlename: </label
 			><input
 				id="middlename"
 				type="text"
+				name="middlename"
 				placeholder="Enter middlename here"
 			/><br />
 			<label>Address: </label
 			><input
 				id="address"
 				type="text"
+				name="address"
 				placeholder="Enter known address here"
 				size="50"
 			/>
@@ -38,6 +41,7 @@
 			><input
 				id="contactno"
 				type="text"
+				name="contactno"
 				placeholder="Enter active contact number"
 			/>
 
@@ -49,7 +53,10 @@
 		<div>
 			<table id="registryTable">
 				<tr>
-					<td>{{newSurname}}</td>
+					<!-- <td>1:{{ newFirstname }}</td> -->
+					<td>
+						1: {{newFirstname}} {{newMiddlename}} {{newSurname}}
+					</td>
 				</tr>
 			</table>
 		</div>

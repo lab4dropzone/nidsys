@@ -41,9 +41,10 @@ class PageTest(unittest.TestCase):
       
       table = self.browser.find_element_by_id('registryTable')
       rows = table.find_elements_by_tag_name('tr')
-      self.assertTrue(any(row.text == '1: Ralph D. Delos Santos'),"Wala ka pang table!")
+      self.assertIn('1: Ralph Dee Delos Santos', [row.text for row in rows])
+
+      # self.assertTrue(any(row.text == '1: Ralph D. Delos Santos'),"Wala ka pang table!")
       #self.fail('Finish the test!')
-      
       
 if __name__ == '__main__':
       unittest.main(warnings='ignore')
