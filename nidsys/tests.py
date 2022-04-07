@@ -9,6 +9,15 @@ class HomePageTest(TestCase):
    def test_mainpage_template_ba_gamit(self):
       response = self.client.get('/')
       self.assertTemplateUsed(response,'mainpage.html')
+
+
+   def test_save_POST_request(self):
+      response = self.client.post('/', data={'surname': 'newSurname',
+         'firstname': 'newFirstname','middlename': 'newMiddlename',
+         'address': 'newAddress','contactno': 'newContactNo'})
+      self.assertIn('newSurname', response.content.decode())
+      self.assertTemplateUsed(response,'mainpage.html')
+
    """
    def test_root_url_resolves_to_mainpage_view(self):
       found = resolve('/')

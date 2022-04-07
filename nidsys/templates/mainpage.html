@@ -7,35 +7,51 @@
 	</head>
 	<body>
 		<h1>National Identification Registration System</h1>
-		<label>Surname: </label
-		><input
-			id="surname"
-			type="text"
-			name=""
-			placeholder="Enter surname here"
-		/>
-		<label>Firstname: </label
-		><input id="firstname" type="text" placeholder="Enter firstname here" />
-		<label>Middlename: </label
-		><input
-			id="middlename"
-			type="text"
-			placeholder="Enter middlename here"
-		/>
-		<label>Address: </label
-		><input
-			id="address"
-			type="text"
-			placeholder="Enter known address here"
-			size="30"
-		/>
-		<label>Contact No.: </label
-		><input
-			id="contactno"
-			type="text"
-			placeholder="Enter active contact number"
-		/>
+		<form method="POST">
+			<label>Surname: </label
+			><input
+				id="surname"
+				type="text"
+				name=""
+				placeholder="Enter surname here"
+			/>
+			<label>Firstname: </label
+			><input
+				id="firstname"
+				type="text"
+				placeholder="Enter firstname here"
+			/>
+			<label>Middlename: </label
+			><input
+				id="middlename"
+				type="text"
+				placeholder="Enter middlename here"
+			/><br />
+			<label>Address: </label
+			><input
+				id="address"
+				type="text"
+				placeholder="Enter known address here"
+				size="50"
+			/>
+			<label>Contact No.: </label
+			><input
+				id="contactno"
+				type="text"
+				placeholder="Enter active contact number"
+			/>
 
-		<input id="btnConfirm" type="button" value="Confirm" />
+			<input id="btnConfirm" size="15" type="submit" value="Confirm" />
+			{% csrf_token %}
+		</form>
+		<br />
+		<hr />
+		<div>
+			<table id="registryTable">
+				<tr>
+					<td>{{newSurname}}</td>
+				</tr>
+			</table>
+		</div>
 	</body>
 </html>

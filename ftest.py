@@ -36,15 +36,14 @@ class PageTest(unittest.TestCase):
       inpContactNo.click()
       time.sleep(0.5)
       inpContactNo.send_keys('0987-6543210')
-      time.sleep(0.5)
-        
+      time.sleep(0.5) 
       btnConfirm.click()
-      '''
-      table = self.browser.find_element_by_id('idListTable')
+      
+      table = self.browser.find_element_by_id('registryTable')
       rows = table.find_elements_by_tag_name('tr')
-      self.assertTrue(any(row.text == '1: Mickey Mouse'),"Wala ka pang table!")
+      self.assertTrue(any(row.text == '1: Ralph D. Delos Santos'),"Wala ka pang table!")
       #self.fail('Finish the test!')
-      '''
+      
       
 if __name__ == '__main__':
       unittest.main(warnings='ignore')
