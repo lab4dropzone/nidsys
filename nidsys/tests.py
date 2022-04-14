@@ -22,22 +22,24 @@ from nidsys.models import Registration
 class ORMTest(TestCase):
    def test_saving_retrieving_list(self):
       entry1 = Registration()
-      entry1.idno = '000001002345'
+      entry1.idno = '202004210001002345'
       entry1.fname = 'Cyren Kate'
       entry1.mname = 'Vie'
       entry1.sname = 'De Belen'
+      entry1.bdate = '03/05/2020'
       entry1.address = 'Area 12 Dasmarinas Cavite '
       entry1.contactno = '0987-1234567'
-      entry1.status = 'pending'
+      # entry1.status = 'pending'
       entry1.save()
       entry2 = Registration()
-      entry2.idno = '000001002346'
+      entry2.idno = '202105250001002346'
       entry2.fname = 'Acey Aljorie'
       entry2.mname = 'Veral'
       entry2.sname = 'Ponilas'
+      entry1.bdate = '06/15/2021'
       entry2.address = 'Area 35 Tagaytay Cavite '
       entry2.contactno = '0912-4324567'
-      entry2.status = 'pending'
+      # entry2.status = 'pending'
       entry2.save()
       items = Registration.objects.all()
       self.assertEqual(items.count(), 2)
