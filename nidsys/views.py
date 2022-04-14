@@ -1,10 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
+from nidsys.models import Registration
+
 def MainPage(request):
-  return render(request,'mainpage.html',{'newSurname':request.POST.get('surname'),
-   'newFirstname':request.POST.get('firstname'),'newMiddlename':request.POST.get('middlename'),
-   'newAddress':request.POST.get('address'),'newContactNo':request.POST.get('contactno'),})
+  if request.method == 'POST':
+    Registration.objects.create(sname=request.POST['surname'],fname=request.POST['firstname'],
+      mname=request.POST['middlename'],bdate=request.POST['bdate'],
+      address=request.POST['address'],contactno=request.POST['contactno'])
+    return redirect('/')
+  return render(request,'mainpage.html')
+
+  # return render(request,'mainpage.html',{'newSurname':request.POST.get('surname'),
+  #  'newFirstname':request.POST.get('firstname'),'newMiddlename':request.POST.get('middlename'),
+  #  'newAddress':request.POST.get('address'),'newContactNo':request.POST.get('contactno'),})
 
    # return render(request, 'mainpage.html', {'newSurname':request.POST.get('surname',''),})
 

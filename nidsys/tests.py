@@ -1,24 +1,31 @@
-from django.test import TestCase
 '''
 from nidsys.views import MainPage
 from django.urls import resolve
 from django.http import HttpRequest
 from django.template.loader import render_to_string'''
+from django.test import TestCase
+from nidsys.models import Registration
 
 class HomePageTest(TestCase):
    def test_mainpage_template_ba_gamit(self):
       response = self.client.get('/')
       self.assertTemplateUsed(response,'mainpage.html')
 
-
    def test_save_POST_request(self):
       response = self.client.post('/', data={'surname': 'newSurname',
-         'firstname': 'newFirstname','middlename': 'newMiddlename',
+         'firstname': 'newFirstname','middlename': 'newMiddlename','bdate':'newBdate',
          'address': 'newAddress','contactno': 'newContactNo'})
-      self.assertIn('newSurname', response.content.decode())
-      self.assertTemplateUsed(response,'mainpage.html')
-      
-from nidsys.models import Registration
+
+      self.assertEqual(Registration.objects.count(), 1)
+      newEntry = Registration.objects.first()
+      self.assertEqual(newEntry.sname, 'newSurname')
+      self.assertEqual(response.status_code, 302)
+      self.assertEqual(response['location'], '/')
+   
+   def test_only_saves_items_if_necessary(self):
+      self.client.get('/')
+      self.assertEqual(Registration.objects.count(), 0)
+
 class ORMTest(TestCase):
    def test_saving_retrieving_list(self):
       entry1 = Registration()
