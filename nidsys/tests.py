@@ -15,16 +15,27 @@ class HomePageTest(TestCase):
       response = self.client.post('/', data={'surname': 'newSurname',
          'firstname': 'newFirstname','middlename': 'newMiddlename','bdate':'newBdate',
          'address': 'newAddress','contactno': 'newContactNo'})
-
       self.assertEqual(Registration.objects.count(), 1)
       newEntry = Registration.objects.first()
       self.assertEqual(newEntry.sname, 'newSurname')
+      
+   def test_POST_redirect(self):
+      response = self.client.post('/', data={'surname': 'newSurname',
+         'firstname': 'newFirstname','middlename': 'newMiddlename','bdate':'newBdate',
+         'address': 'newAddress','contactno': 'newContactNo'})
       self.assertEqual(response.status_code, 302)
       self.assertEqual(response['location'], '/')
    
    def test_only_saves_items_if_necessary(self):
       self.client.get('/')
       self.assertEqual(Registration.objects.count(), 0)
+
+   def test_template_displays_list(self):
+      Registration.objects.create(sname='Maliksi')
+      Registration.objects.create(sname='Balota')
+      response = self.client.get('/')
+      self.assertIn('Maliksi', response.content.decode())
+      self.assertIn('Balota', response.content.decode())
 
 class ORMTest(TestCase):
    def test_saving_retrieving_list(self):
@@ -36,7 +47,6 @@ class ORMTest(TestCase):
       entry1.bdate = '03/05/2020'
       entry1.address = 'Area 12 Dasmarinas Cavite '
       entry1.contactno = '0987-1234567'
-      # entry1.status = 'pending'
       entry1.save()
       entry2 = Registration()
       entry2.idno = '202105250001002346'
@@ -46,7 +56,6 @@ class ORMTest(TestCase):
       entry1.bdate = '06/15/2021'
       entry2.address = 'Area 35 Tagaytay Cavite '
       entry2.contactno = '0912-4324567'
-      # entry2.status = 'pending'
       entry2.save()
       items = Registration.objects.all()
       self.assertEqual(items.count(), 2)

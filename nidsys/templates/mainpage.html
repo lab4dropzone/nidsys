@@ -59,11 +59,21 @@
 		<hr />
 		<div>
 			<table id="registryTable">
+				{% for item in registered %}
 				<tr>
+					<td width="400">
+						{{ forloop.counter }}: {{item.fname }} {{ item.mname }}
+						{{ item.sname }}
+					</td>
+					<td>Status - {{ item.status }}</td>
+				</tr>
+				{% endfor %}
+
+				<!-- <tr>
 					<td>
 						1: {{newFirstname}} {{newMiddlename}} {{newSurname}}
 					</td>
-				</tr>
+				</tr> -->
 			</table>
 		</div>
 	</body>

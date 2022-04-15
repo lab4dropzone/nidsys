@@ -9,7 +9,9 @@ def MainPage(request):
       mname=request.POST['middlename'],bdate=request.POST['bdate'],
       address=request.POST['address'],contactno=request.POST['contactno'])
     return redirect('/')
-  return render(request,'mainpage.html')
+
+  reglist = Registration.objects.all()
+  return render(request,'mainpage.html',{'registered':reglist})
 
   # return render(request,'mainpage.html',{'newSurname':request.POST.get('surname'),
   #  'newFirstname':request.POST.get('firstname'),'newMiddlename':request.POST.get('middlename'),
