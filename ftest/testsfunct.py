@@ -61,16 +61,53 @@ class PageTest(LiveServerTestCase):
       inpContactNo.send_keys('0987-6543210')
       time.sleep(0.5) 
       btnConfirm.click()
-
       # self.check_rows_in_listtable('1: Polo Jasty De Guzman Mabanag Status - pending')
       self.check_rows_in_listtable('1: Ralph Dee Delos Santos Status - pending')
-      
       # table = self.browser.find_element_by_id('registryTable')
       # rows = table.find_elements_by_tag_name('tr')
       # self.assertIn('1: Ralph Dee Delos Santos', [row.text for row in rows])
       #self.fail('Finish the test!')
+      inpSurname = self.browser.find_element_by_id('surname')
+      inpFirstname = self.browser.find_element_by_id('firstname')
+      inpMiddlename = self.browser.find_element_by_id('middlename')
+      inpBdate = self.browser.find_element_by_id('bdate')
+      inpAddress = self.browser.find_element_by_id('address')
+      inpContactNo = self.browser.find_element_by_id('contactno')
+      btnConfirm = self.browser.find_element_by_id('btnConfirm')
+      self.assertEqual(inpSurname.get_attribute('placeholder'),'Enter surname here')
+      time.sleep(2)
+      inpSurname.click()
+      time.sleep(0.5)
+      inpSurname.send_keys('Maliksi')
+      inpFirstname.click()
+      time.sleep(0.5)
+      inpFirstname.send_keys('Jean Dale')
+      inpMiddlename.click()
+      time.sleep(0.5)
+      inpMiddlename.send_keys('Cee')
+      inpBdate.click()
+      time.sleep(0.5)
+      inpBdate.send_keys('05/07/2021')
+      inpAddress.click()
+      time.sleep(0.5)
+      inpAddress.send_keys('Area 53 Alfonso Cavite')
+      inpContactNo.click()
+      time.sleep(0.5)
+      inpContactNo.send_keys('0912-8722232')
+      time.sleep(0.5) 
+      btnConfirm.click()   
+      self.check_rows_in_listtable('1: Ralph Dee Delos Santos Status - pending')   
+      self.check_rows_in_listtable('2: Jean Dale Cee Maliksi Status - pending')
 
-   def test_another_entry(self):
+      viewlist_url_2 = self.browser.current_url
+      self.assertRegex(viewlist_url_2, '/nidsys/.+')
+      self.assertNotEqual(viewlist_url, viewlist_url_2)
+      pageBody = self.browser.find_element_by_tag_name('body').text
+      self.assertNotIn('Polo Jasty De Guzman Mabanag', pageBody)
+      self.assertIn('Ralph Dee Delos Santos', pageBody)
+      self.assertIn('Jean Dale Cee Maliksi', pageBody)
+
+   def test_another_entry_different_url(self):
       self.browser.get(self.live_server_url)
       self.assertIn('National ID System', self.browser.title)
       headerText = self.browser.find_element_by_tag_name('h1').text
@@ -106,6 +143,8 @@ class PageTest(LiveServerTestCase):
       btnConfirm.click()
       
       self.check_rows_in_listtable('1: Polo Jasty De Guzman Mabanag Status - pending')
+      viewlist_url = self.browser.current_url
+      self.assertRegex(viewlist_url, '/nidsys/.+')
       
    #    table = self.browser.find_element_by_id('registryTable')
    #    rows = table.find_elements_by_tag_name('tr')
