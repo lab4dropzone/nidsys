@@ -3,6 +3,7 @@ from selenium import webdriver
 import unittest
 import time
 from django.test import LiveServerTestCase
+from selenium.common.exceptions import WebDriverException
 
 cWait = 3
 class PageTest(LiveServerTestCase):
@@ -14,7 +15,7 @@ class PageTest(LiveServerTestCase):
    def check_rows_in_listtable(self, row_text):
       start_time = time.time()
       while time.time()-start_time<cWait:
-         # time.sleep(0.1)
+         # time.sleep(0.5)
          try:
             table = self.browser.find_element_by_id('registryTable')
             rows = table.find_elements_by_tag_name('tr')

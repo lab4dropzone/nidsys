@@ -8,8 +8,12 @@ def MainPage(request):
     Registration.objects.create(sname=request.POST['surname'],fname=request.POST['firstname'],
       mname=request.POST['middlename'],bdate=request.POST['bdate'],
       address=request.POST['address'],contactno=request.POST['contactno'])
-    return redirect('/')
+    return redirect('/nidsys/viewlist_url/')
 
+  reglist = Registration.objects.all()
+  return render(request,'mainpage.html',{'registered':reglist})
+
+def ViewList(request):
   reglist = Registration.objects.all()
   return render(request,'mainpage.html',{'registered':reglist})
 

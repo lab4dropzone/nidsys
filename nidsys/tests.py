@@ -24,7 +24,8 @@ class HomePageTest(TestCase):
          'firstname': 'newFirstname','middlename': 'newMiddlename','bdate':'newBdate',
          'address': 'newAddress','contactno': 'newContactNo'})
       self.assertEqual(response.status_code, 302)
-      self.assertEqual(response['location'], '/')
+      self.assertEqual(response['location'], '/nidsys/viewlist_url/')
+      # self.assertEqual(response['location'], '/')
    
    def test_only_saves_items_if_necessary(self):
       self.client.get('/')
@@ -36,6 +37,14 @@ class HomePageTest(TestCase):
       response = self.client.get('/')
       self.assertIn('Maliksi', response.content.decode())
       self.assertIn('Balota', response.content.decode())
+
+class ViewTest(TestCase):
+   def test_displays_all(self):
+      Registration.objects.create(fname='Cyren Kate De Belen')
+      Registration.objects.create(fname='Acey Aljorie Ponilas')
+      response = self.client.get('/nidsys/viewlist_url/')
+      self.assertContains(response, 'Cyren Kate De Belen')
+      self.assertContains(response, 'Acey Aljorie Ponilas')
 
 class ORMTest(TestCase):
    def test_saving_retrieving_list(self):
