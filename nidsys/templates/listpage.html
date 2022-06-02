@@ -1,0 +1,125 @@
+<table>
+	<tr>
+		<td style="width: 700px">Filipino Name:</td>
+		<td style="width: 400px">NID Number:</td>
+		<td style="width: 500px">Your Link:</td>
+	</tr>
+	<hr />
+	<tr style="color: red; font-size: 22px">
+		<td>
+			{{registered.sname.upper}},
+			{{registered.fname.upper}}{{registered.mname.upper}}
+		</td>
+		<td>{{registered.idno}}</td>
+		<td>pinoy.ph/nidsys/{{registered.id}}/</td>
+	</tr>
+</table>
+<hr />
+<!-- <form method="POST" action="/nidsys/{{ registered.id }}/addItem">  -->
+<form method="POST" action="/nidsys/newlist_url">
+	<table>
+		<tr>
+			<td>
+				<label style="color: black; font-size: 21px"
+					>Previous Addresses:</label
+				>
+			</td>
+			<td>
+				<label style="color: black; font-size: 21px"> From date:</label>
+			</td>
+			<td><label style="color: black; font-size: 21px"> To:</label></td>
+		</tr>
+		<br />
+		<tr>
+			<td>
+				<input
+					type="text"
+					id="prevaddr"
+					name="prevaddr"
+					required
+					style="
+						color: blue;
+						font-size: 21px;
+						width: 700px;
+						font-weight: bold;
+					"
+					placeholder="Residence you stayed at least a month"
+				/>
+			</td>
+			<td>
+				<input
+					type="text"
+					id="dateFrom"
+					name="dateFrom"
+					style="
+						color: blue;
+						font-size: 21px;
+						width: 200px;
+						font-weight: bold;
+					"
+					placeholder="magmula nuong"
+					required
+				/>
+			</td>
+			<td>
+				<input
+					type="text"
+					id="dateTo"
+					name="dateTo"
+					style="
+						color: blue;
+						font-size: 21px;
+						width: 200px;
+						font-weight: bold;
+					"
+					placeholder="hanggang"
+					required
+				/>
+			</td>
+			<td>
+				<input
+					type="submit"
+					id="btnConfirm"
+					name="btnConfirm"
+					style="
+						color: blue;
+						background-color: lightgrey;
+						height: 30px;
+						width: 180px;
+						font-size: 22px;
+					"
+					value="Confirm"
+				/>
+			</td>
+		</tr>
+	</table>
+	{% csrf_token %}
+</form>
+<hr />
+<div
+	style="
+		border: 1px solid red;
+		width: 1000px;
+		height: 345px;
+		overflow: auto;
+		float: left;
+	"
+>
+	<table id="listTable" style="font-size: 25px">
+		{% for item in registered.pui_set.all %}
+		<tr>
+			<td style="text-align: center">{{forloop.counter}}.</td>
+			<td>{{item.prevaddr}} from {{item.fromdate}} to {{item.todate}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+<div
+	style="
+		border: 1px solid red;
+		width: 300px;
+		height: 345px;
+		background-image: url('/static/img/???.png');
+		float: left;
+	"
+></div>

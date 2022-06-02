@@ -10,9 +10,14 @@ class HomePageTest(TestCase):
    def test_mainpage_template_ba_gamit(self):
       response = self.client.get('/')
       self.assertTemplateUsed(response,'mainpage.html')
+   
+   # def test_only_saves_items_if_necessary(self):
+   #    self.client.get('/')
+   #    self.assertEqual(Registration.objects.count(), 0)
 
+class CreateListTest(TestCase):
    def test_save_POST_request(self):
-      response = self.client.post('/', data={'surname': 'newSurname',
+      response = self.client.post('/nidsys/newlist_url', data={'surname': 'newSurname',
          'firstname': 'newFirstname','middlename': 'newMiddlename','bdate':'newBdate',
          'address': 'newAddress','contactno': 'newContactNo'})
       self.assertEqual(Registration.objects.count(), 1)
@@ -20,23 +25,21 @@ class HomePageTest(TestCase):
       self.assertEqual(newEntry.sname, 'newSurname')
       
    def test_POST_redirect(self):
-      response = self.client.post('/', data={'surname': 'newSurname',
+      response = self.client.post('/nidsys/newlist_url', data={'surname': 'newSurname',
          'firstname': 'newFirstname','middlename': 'newMiddlename','bdate':'newBdate',
          'address': 'newAddress','contactno': 'newContactNo'})
-      self.assertEqual(response.status_code, 302)
-      self.assertEqual(response['location'], '/nidsys/viewlist_url/')
+      self.assertRedirects(response, '/nidsys/viewlist_url/')
+      # self.assertEqual(response.status_code, 302)
+      # self.assertEqual(response['location'], '/nidsys/viewlist_url/')
       # self.assertEqual(response['location'], '/')
-   
-   def test_only_saves_items_if_necessary(self):
-      self.client.get('/')
-      self.assertEqual(Registration.objects.count(), 0)
 
-   def test_template_displays_list(self):
-      Registration.objects.create(sname='Maliksi')
-      Registration.objects.create(sname='Balota')
-      response = self.client.get('/')
-      self.assertIn('Maliksi', response.content.decode())
-      self.assertIn('Balota', response.content.decode())
+
+   # def test_template_displays_list(self):
+   #    Registration.objects.create(sname='Maliksi')
+   #    Registration.objects.create(sname='Balota')
+   #    response = self.client.get('/')
+   #    self.assertIn('Maliksi', response.content.decode())
+   #    self.assertIn('Balota', response.content.decode())
 
 class ViewTest(TestCase):
    def test_displays_all(self):
@@ -45,6 +48,10 @@ class ViewTest(TestCase):
       response = self.client.get('/nidsys/viewlist_url/')
       self.assertContains(response, 'Cyren Kate De Belen')
       self.assertContains(response, 'Acey Aljorie Ponilas')
+
+   def test_listview_uses_listpage(self):
+      response = self.client.get('/nidsys/viewlist_url/')
+      self.assertTemplateUsed(response, 'listpage.html')
 
 class ORMTest(TestCase):
    def test_saving_retrieving_list(self):
