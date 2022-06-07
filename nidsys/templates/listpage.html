@@ -106,10 +106,13 @@
 	"
 >
 	<table id="listTable" style="font-size: 25px">
-		{% for item in registered.prevaddr_set.all %}
+		{% for item in addrList %}
 		<tr>
 			<td style="text-align: center">{{forloop.counter}}.</td>
-			<td>{{item.prevaddr}} from {{item.fromdate}} to {{item.todate}}</td>
+			<td>
+				{{item.regid}} - {{item.prevaddr}} from {{item.fromdate}} to
+				{{item.todate}}
+			</td>
 		</tr>
 		{% endfor %}
 	</table>
