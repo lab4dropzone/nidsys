@@ -7,16 +7,14 @@
 	<hr />
 	<tr style="color: red; font-size: 22px">
 		<td>
-			{{registered.sname.upper}},
-			{{registered.fname.upper}}{{registered.mname.upper}}
+			{{regId.sname.upper}}, {{regId.fname.upper}} {{regId.mname.upper}}
 		</td>
-		<td>{{registered.idno}}</td>
-		<td>pinoy.ph/nidsys/{{registered.id}}/</td>
+		<td>{{regId.idno}}</td>
+		<td>pinoy.ph/nidsys/{{regId.id}}/</td>
 	</tr>
 </table>
 <hr />
-<!-- <form method="POST" action="/nidsys/{{ registered.id }}/addItem">  -->
-<form method="POST" action="/nidsys/newlist_url">
+<form method="POST" action="/nidsys/{{regId.id}}/addList">
 	<table>
 		<tr>
 			<td>
@@ -49,8 +47,8 @@
 			<td>
 				<input
 					type="text"
-					id="dateFrom"
-					name="dateFrom"
+					id="fromdate"
+					name="fromdate"
 					style="
 						color: blue;
 						font-size: 21px;
@@ -64,8 +62,8 @@
 			<td>
 				<input
 					type="text"
-					id="dateTo"
-					name="dateTo"
+					id="todate"
+					name="todate"
 					style="
 						color: blue;
 						font-size: 21px;
@@ -106,13 +104,10 @@
 	"
 >
 	<table id="listTable" style="font-size: 25px">
-		{% for item in addrList %}
+		{% for item in regId.previousaddr_set.all %}
 		<tr>
 			<td style="text-align: center">{{forloop.counter}}.</td>
-			<td>
-				{{item.regid}} - {{item.prevaddr}} from {{item.fromdate}} to
-				{{item.todate}}
-			</td>
+			<td>{{item.prevaddr}} from {{item.fromdate}} to {{item.todate}}</td>
 		</tr>
 		{% endfor %}
 	</table>

@@ -8,16 +8,17 @@ class HomePageTest(TestCase):
 
 class CreateListTest(TestCase):
    def test_save_POST_request(self):
-      response = self.client.post('/nidsys/newlist_url', data={'mprevaddr': 'Bailen Cavite',
-         'mfromdate': 'May 23,2020','mtodate': 'June 12, 1997'})
-      self.assertEqual(PreviousAddr.objects.count(), 1)
-      newEntry = PreviousAddr.objects.first()
-      self.assertEqual(newEntry.prevaddr, 'Bailen Cavite')
+      response = self.client.post('/nidsys/newlist_url', data={'surname':'De Belen','firstname':'Cyren Kate',
+         'middlename':'Vie','bdate':'May 5, 1999','address':'Bailen Cavite','contactno':'0912665312'})
+      self.assertEqual(Registration.objects.count(), 1)
+      newEntry = Registration.objects.first()
+      self.assertEqual(newEntry.sname,'De Belen')
       
    def test_POST_redirect(self):
+      response = self.client.post('/nidsys/newlist_url', data={'surname':'De Belen','firstname':'Cyren Kate',
+         'middlename':'Vie','bdate':'May 5, 1999','address':'Bailen Cavite','contactno':'0912665312'})
+      self.assertEqual(Registration.objects.count(), 1)
       newReg = Registration.objects.first()
-      response = self.client.post('/nidsys/newlist_url', data={'mprevaddr': 'Bailen Cavite',
-         'mfromdate': 'May 23,2020','mtodate': 'June 12, 1997'})
       self.assertRedirects(response,f'/nidsys/{newReg.id}/')
 
 class ViewTest(TestCase):
@@ -40,9 +41,37 @@ class ViewTest(TestCase):
       self.assertContains(response,'Tagaytay Cavite')
 
    def test_listview_uses_listpage(self):
-      newReg = Registration.objects.first()
+      newReg = Registration.objects.create()
       response = self.client.get(f'/nidsys/{newReg.id}/')
       self.assertTemplateUsed(response, 'listpage.html')
+
+   def test_pass_list_to_template(self):
+      reg1 = Registration.objects.create()
+      passList = Registration.objects.create()
+      reg2 = Registration.objects.create()
+      response = self.client.get(f'/nidsys/{passList.id}/')
+      self.assertEqual(response.context['regId'],passList)
+
+class AddPrevAddrTest(TestCase):
+   def test_add_POST_request_to_existing_Registrant(self):
+      Reg111= Registration.objects.create()
+      exReg = Registration.objects.create()
+      Reg222 = Registration.objects.create()
+      self.client.post(f'/nidsys/{exReg.id}/addList',data={'prevaddr':'Salitran Dasmarinas Cavite',
+         'fromdate': 'July 5, 1998','todate':'December 15, 2000'})
+      self.assertEqual(PreviousAddr.objects.count(), 1)
+      newList = PreviousAddr.objects.first()
+      self.assertEqual(newList.prevaddr, 'Salitran Dasmarinas Cavite')
+      self.assertEqual(newList.regid, exReg)
+
+   def test_redirects_to_list_view(self):
+      Reg111 = Registration.objects.create()
+      exReg = Registration.objects.create()
+      Reg222 = Registration.objects.create()
+      Reg333 = Registration.objects.create()
+      response = self.client.post(f'/nidsys/{exReg.id}/addList',data={'prevaddr':'GMA Cavite',
+         'fromdate': 'April 15, 1998','todate':'October 9, 2000'})
+      self.assertRedirects(response, f'/nidsys/{exReg.id}/')
 
 class ORMTest(TestCase):
    def test_saving_retrieving_list(self):  
