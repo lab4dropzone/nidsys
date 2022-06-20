@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<link rel="stylesheet" href="/static/css/nidsys.css" />
+	</head>
+	<body>
+		<div id="container">
+			<nav>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li>
+						<a href="#">LGU</a>
+						<ul>
+							<li><a href="#">City</a></li>
+							<li><a href="#">Municipal</a></li>
+							<li><a href="#">Barangay</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="CTList/testcenters.api">Testing Center</a>
+						<ul>
+							<li><a href="#">ABC Medical Center</a></li>
+							<li><a href="#">Covid Testing Center</a></li>
+							<li>
+								<a href="#">Mobile Testing Unit</a>
+								<ul>
+									<li><a href="#">City Mobile Lab</a></li>
+									<li><a href="#">Private Mobile Lab</a></li>
+									<li>
+										<a href="#">Personal Testing Kit</a>
+										<ul>
+											<li><a href="#">Swab Test</a></li>
+											<li>
+												<a href="#">Sputum Sample</a>
+											</li>
+											<li>
+												<a href="#"
+													>TanongTanong Lang</a
+												>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">One Hospital Center</a>
+						<ul>
+							<li><a href="#">Cavite Provincial Hosp</a></li>
+							<li><a href="#">OLP Hospital</a></li>
+							<li><a href="#">Imus Medical Center</a></li>
+							<li><a href="#">South Imus Cavite Hospital</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Hot Line</a></li>
+					<li><a href="#">Contact</a></li>
+					<li>
+						<a href="/CTList/carriers.api/">Carriers List</a>
+					</li>
+					<li>
+						<a href="/CTList/comorbidities.api/">Comobidities</a>
+					</li>
+				</ul>
+			</nav>
+			<h1>{% block h1_text %}{% endblock %}</h1>
+		</div>
+		{% block form_table_div %}{% endblock %}
+	</body>
+</html>

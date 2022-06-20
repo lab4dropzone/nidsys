@@ -26,7 +26,7 @@ SECRET_KEY = '4%$go-c*xxcv0=(#k9jx$3)=60(u*f2u+n@)-fuw&n=r2tui5r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nidreg.ph']
 
 
 # Application definition

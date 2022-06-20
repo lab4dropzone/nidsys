@@ -1,80 +1,69 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>National ID System</title>
-	</head>
-	<body>
-		<h1>National Identification Registration System</h1>
-		<form method="POST" action="nidsys/newlist_url">
-			<label>Surname: </label
-			><input
-				id="surname"
-				type="text"
-				name="surname"
-				placeholder="Enter surname here"
-			/>
-			<label>Firstname: </label
-			><input
-				id="firstname"
-				type="text"
-				name="firstname"
-				placeholder="Enter firstname here"
-			/>
-			<label>Middlename: </label
-			><input
-				id="middlename"
-				type="text"
-				name="middlename"
-				placeholder="Enter middlename here"
-			/>
-			<label> Birthdate: </label
-			><input
-				id="bdate"
-				type="text"
-				name="bdate"
-				placeholder="Enter birthdate here"
-			/><br />
-			<label>Address: </label
-			><input
-				id="address"
-				type="text"
-				name="address"
-				placeholder="Enter known address here"
-				size="50"
-			/>
-			<label>Contact No.: </label
-			><input
-				id="contactno"
-				type="text"
-				name="contactno"
-				placeholder="Enter active contact number"
-			/>
+<!-- prettier-ignore -->
+{% extends 'template.html' %} 
+{% block title %} National ID System {% endblock%} 
+{% block h1_text %} National Identification Registration System {% endblock%} 
+{% block form_table_div %}
+<form method="POST" action="nidsys/newlist_url">
+	<label>Surname: </label
+	><input
+		id="surname"
+		type="text"
+		name="surname"
+		placeholder="Enter surname here"
+	/>
+	<label>Firstname: </label
+	><input
+		id="firstname"
+		type="text"
+		name="firstname"
+		placeholder="Enter firstname here"
+	/>
+	<label>Middlename: </label
+	><input
+		id="middlename"
+		type="text"
+		name="middlename"
+		placeholder="Enter middlename here"
+	/>
+	<label> Birthdate: </label
+	><input
+		id="bdate"
+		type="text"
+		name="bdate"
+		placeholder="Enter birthdate here"
+	/><br />
+	<label>Address: </label
+	><input
+		id="address"
+		type="text"
+		name="address"
+		placeholder="Enter known address here"
+		size="50"
+	/>
+	<label>Contact No.: </label
+	><input
+		id="contactno"
+		type="text"
+		name="contactno"
+		placeholder="Enter active contact number"
+	/>
 
-			<input id="btnConfirm" size="15" type="submit" value="Confirm" />
-			{% csrf_token %}
-		</form>
-		<br />
-		<hr />
-		<div>
-			<table id="registryTable">
-				{% for item in registered %}
-				<tr>
-					<td width="400">
-						{{ forloop.counter }}: {{item.fname }} {{ item.mname }}
-						{{ item.sname }}
-					</td>
-					<td>Status - {{ item.status }}</td>
-				</tr>
-				{% endfor %}
-
-				<!-- <tr>
-					<td>
-						1: {{newFirstname}} {{newMiddlename}} {{newSurname}}
-					</td>
-				</tr> -->
-			</table>
-		</div>
-	</body>
-</html>
+	<input id="btnConfirm" size="15" type="submit" value="Confirm" />
+	{% csrf_token %}
+</form>
+<br />
+<hr />
+<div>
+	<table id="registryTable">
+		{% for item in registered %}
+		<tr>
+			<td width="400">
+				{{ forloop.counter }}: {{item.fname }} {{ item.mname }} {{
+				item.sname }}
+			</td>
+			<td>Status - {{ item.status }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock%}

@@ -1,5 +1,5 @@
-# from django.contrib import admin
 # from django.urls import path
+from django.contrib import admin
 from django.urls import re_path as url
 
 from nidsys import views as nidsys_views
@@ -9,6 +9,7 @@ from django.conf.urls import include
 urlpatterns = [
     url(r'^$', nidsys_views.MainPage, name='mainpage'),
     url(r'^nidsys/', include(nidsys_urls)),
+    url('admin/', admin.site.urls),
 
     # path('', views.MainPage, name='mainpage'),
     # url(r'^nidsys/viewlist_url/$', views.ViewList, name='viewlist'), 
