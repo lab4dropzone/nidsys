@@ -31,6 +31,7 @@
 		type="text"
 		name="bdate"
 		placeholder="Enter birthdate here"
+		size="17"
 	/><br />
 	<label>Address: </label
 	><input
@@ -55,13 +56,18 @@
 <hr />
 <div>
 	<table id="registryTable">
-		{% for item in registered %}
+		{% for item in RegList %}
 		<tr>
 			<td width="400">
-				{{ forloop.counter }}: {{item.fname }} {{ item.mname }} {{
-				item.sname }}
-			</td>
-			<td>Status - {{ item.status }}</td>
+				{{forloop.counter}}: {{item.fname }} {{ item.mname }}
+				{{item.sname }}
+			</td>		
+			<td>
+			{% if item.status == "approved" %}
+      			<a href="/nidsys/{{forloop.counter}}">{{item.idno}}</a>
+      		{% else %}
+      			Status - {{item.status}}</td>
+   	 		{% endif %}</td>
 		</tr>
 		{% endfor %}
 	</table>

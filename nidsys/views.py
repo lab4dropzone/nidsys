@@ -4,7 +4,7 @@ from nidsys.models import Registration,PreviousAddr
 
 def MainPage(request):
   reglist = Registration.objects.all()
-  return render(request,'mainpage.html')
+  return render(request,'mainpage.html',{'RegList':reglist})
 
 def ViewList(request,rId):
   regId = Registration.objects.get(id=rId)
@@ -32,5 +32,25 @@ def AddList(request,rId):
   PreviousAddr.objects.create(regid=newReg,prevaddr=vprevaddr,fromdate=vfromdate,todate=vtodate)
   return redirect(f'/nidsys/{newReg.id}/')
 
+def EditPrevAddr(request,regId,prevAddrId):
+  regist = Registration.objects.get(id=regId)
+  prevAdd = PreviousAddr.objects.get(id=prevAddrId)
+  return render(request,'editprevaddr.html',{'PrevAdd':prevAdd,'Regist':regist})
+
+def UpdatePrevAddr(request,regId,prevAddrId):
+  regId = Registration.objects.get(id=regId) 
+  prevAdd = PreviousAddr.objects.get(id = prevAddrId)
+  prevAdd.prevaddr = request.POST['prevaddr']
+  prevAdd.fromdate = request.POST['fromdate']
+  prevAdd.todate = request.POST['todate']
+  prevAdd.save()
+  return render(request,'listpage.html',{'regId':regId})
+
+def DeletePrev(request,regId,prevAddrId):
+  regId = Registration.objects.get(id=regId) 
+  prevAdd = PreviousAddr.objects.get(id = prevAddrId)
+  prevAdd.delete()
+  return render(request,'listpage.html',{'regId':regId})
+  
 
 

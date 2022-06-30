@@ -1,25 +1,15 @@
 <!-- prettier-ignore -->
 {% extends 'template.html' %} 
 {% block title %} National ID System {% endblock%} 
-{% block h1_text %} National Identification Registration System {% endblock%} 
+{% block h1_text %} NID System Edit Page{% endblock%} 
 {% block form_table_div %}
-<table>
-	<tr>
-		<td style="width: 700px">Filipino Name:</td>
-		<td style="width: 400px">NID Number:</td>
-		<td style="width: 500px">Your Link:</td>
-	</tr>
-	<hr />
-	<tr style="color: red; font-size: 22px">
-		<td>
-			{{regId.sname.upper}}, {{regId.fname.upper}} {{regId.mname.upper}}
-		</td>
-		<td>{{regId.idno}}</td>
-		<td>nidreg.ph/nidsys/{{regId.id}}/</td>
-	</tr>
-</table>
 <hr />
-<form method="POST" action="/nidsys/{{regId.id}}/addList">
+Belongs to:
+<span style="color: red"
+	>{{Regist.fname.upper}} {{Regist.mname.upper}} {{Regist.sname.upper}}</span
+>
+<hr />
+<form method="POST" action="/nidsys/{{Regist.id}}/{{PrevAdd.id}}/update">
 	<table>
 		<tr>
 			<td>
@@ -47,6 +37,7 @@
 						font-weight: bold;
 					"
 					placeholder="Residence you stayed at least a month"
+					value="{{PrevAdd.prevaddr}}"
 				/>
 			</td>
 			<td>
@@ -62,6 +53,7 @@
 					"
 					placeholder="magmula nuong"
 					required
+					value="{{PrevAdd.fromdate}}"
 				/>
 			</td>
 			<td>
@@ -77,21 +69,22 @@
 					"
 					placeholder="hanggang"
 					required
+					value="{{PrevAdd.todate}}"
 				/>
 			</td>
 			<td>
 				<input
 					type="submit"
-					id="btnConfirm"
-					name="btnConfirm"
+					id="btnUpdate"
+					name="btnUpdate"
 					style="
-						color: blue;
+						color: #a40000ff;
 						background-color: lightgrey;
 						height: 30px;
 						width: 180px;
 						font-size: 22px;
 					"
-					value="Confirm"
+					value="Update"
 				/>
 			</td>
 		</tr>
@@ -106,23 +99,9 @@
 		height: 345px;
 		overflow: auto;
 		float: left;
+		background-image: url('/static/img/cBull.jpeg');
 	"
->
-	<table id="listTable" style="font-size: 25px">
-		{% for item in regId.previousaddr_set.all %}
-		<tr>
-			<td style="text-align: center">{{forloop.counter}}.</td>
-			<td>{{item.prevaddr}} from {{item.fromdate}} to {{item.todate}}</td>
-			<td>
-				<a href="/nidsys/{{regId.id}}/{{item.id}}/edit">Edit</a>
-			</td>
-			<td>
-				<a href="/nidsys/{{regId.id}}/{{item.id}}/delete">Delete</a>
-			</td>
-		</tr>
-		{% endfor %}
-	</table>
-</div>
+></div>
 <div
 	style="
 		border: 1px solid red;
